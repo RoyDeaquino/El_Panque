@@ -239,70 +239,10 @@ class Gui(tk.Frame):
         ttk.Label(self.tab3, text=self.i18n.info, font=("Cantarell", 20), width=20,
                   ).grid(column=5, columnspan=2, row=1)
 
-    # def insert_propiedades(self):
-    #
-    #     # foto del producto
-    #     self.model.lbl_name.image_create("current", image=self.pnv)
-    #     # imagen del boton +
-    #     self.model.pcb.configure(image=self.pcb)
-    #     # imagen del boton -
-    #     self.model.pcq.configure(image=self.pcq)
-    #     # imagen lapiz
-    #     self.model.lpzb.configure(image=self.lpz, text=self.i18n.edit, style='btn.TButton')
-    #     # imagen de ojo
-    #     self.model.eye.configure(command=lambda: self.new_p_toplevel(self.i18n.details, ' '))
-
     def actualizar_products(self):
         self.model = PanqueModels(self, self.tab3, self.lang)
         self.insert_header()
         self.name_data = self.model.list_all_product()
-
-    # def insert_info(self):
-    #     """Inserta la informacion de los productos"""
-    #     descrip = "Delciciosa rebanada de pastel\nde tres leches sabor cajeta\ncon trozos de nuez."
-    #     cost = "\nCosto: 120"
-    #     size = "\nTamaño: Rebanada para 1 persona"
-    #     stock= "\n\nAGOTADO"
-    #     scrol_w = 30;
-    #     scrol_h = 8
-    #     style_button = ttk.Style()
-    #     style_button.configure('btn.TButton', font=("Cantarell", 15), width=5)
-    #     # 1
-    #     self.lbl_name = Text(self.tab3, wrap='word', background='aliceBlue', height=scrol_h, width=scrol_w)
-    #     self.lbl_name.insert(tk.INSERT, 'Pastel de cajeta rebanado')
-    #     self.lbl_name.image_create("current", image=self.pnv)
-    #     self.lbl_name.grid(column=0, row=2, sticky='W')
-    #     self.lbl_name.config(state='disabled')
-    #     # 2
-    #     pcb = ttk.Button(self.tab3, text='+', compound='top', style='btn.TButton', image=self.pcb)
-    #     pcb.image = self.pcb
-    #     pcb.grid(column=1, row=2)
-    #     pcq = ttk.Button(self.tab3, text='-', compound='top', style='btn.TButton', image=self.pcq)
-    #     pcq.image = self.pcq
-    #     pcq.grid(column=2, row=2)
-    #     # 3
-    #     lpzb = ttk.Button(self.tab3, text=self.i18n.edit, compound='top', style='btn.TButton', image=self.lpz)
-    #     lpzb.image = self.lpz
-    #     lpzb.grid(column=3, row=2)
-    #     # 4
-    #     eye = ttk.Button(self.tab3, text=self.i18n.details, compound='top', style='btn.TButton', image=self.ojo,
-    #                      command=lambda: self.new_p_toplevel(self.i18n.details, ' '))
-    #     eye.image = self.ojo
-    #     eye.grid(column=4, row=2)
-    #     # 5
-    #     info_text = scrolledtext.ScrolledText(self.tab3, wrap='word', background='aliceBlue', width=scrol_w,
-    #                                           height=scrol_h)
-    #     info_text.insert(tk.INSERT, descrip)
-    #     info_text.insert(tk.END, cost)
-    #     info_text.insert(tk.END, size)
-    #     info_text.insert(tk.END, stock)
-    #     info_text.grid(column=5, row=2)
-    #     info_text.tag_add("stock", "7.0", "7.7")
-    #     info_text.tag_config("stock", foreground="red")
-    #     info_text.config(state='disabled')
-    #     self.model = PanqueModels(self.tab3)
-    #     self.model.list_all_product()
-    #     self.insert_propiedades()
 
     def create_tab3(self):
         """Crea el form del tab2"""
