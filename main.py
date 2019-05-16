@@ -75,7 +75,6 @@ class Gui(tk.Frame):
         cost = self.cost.get()
         matchCost = patternCost.search(cost)
         matchStock = patternStock.search(stock)
-        print(matchCost, '-', matchStock)
         if matchCost:
             c = True
         else:
@@ -112,10 +111,48 @@ class Gui(tk.Frame):
             self.new_p_toplevel('redraw', dic)
 
     def onEdit(self):
-        self.model.update_product(self.name_edit, self.name.get(), self.detail.get(), int(self.cost.get()), self.tam.get(),
-                                  int(self.stock.get()))
-        self.actualizar_products()
-        self.topl.destroy()
+        c, s = False, False
+        patternStock = re.compile(r"^\b(10{0,2}|[1-9]{1,2})\b$")
+        stock = self.stock.get()
+        patternCost = re.compile(r"^\b([1-9][0-9]{0,3}|10000)\b$")
+        cost = self.cost.get()
+        matchCost = patternCost.search(cost)
+        matchStock = patternStock.search(stock)
+        if matchCost:
+            c = True
+        else:
+            msg2 = MessagePopup(self.i18n.msgCostTitle, self.i18n.msgCostBody, 'w')
+            c = False
+
+        if matchStock:
+            s = True
+        else:
+            msg = MessagePopup(self.i18n.msgStockTitle, self.i18n.msgStockBody, 'w')
+            s = False
+
+        if c & s:
+            self.model.update_product(self.name_edit, self.name.get(), self.detail.get(), int(self.cost.get()),
+                                      self.tam.get(), int(self.stock.get()))
+            # actualizar tab 3
+            self.actualizar_products()
+            self.topl.destroy()
+        else:
+            # Redibuja el formulario
+            name = self.name.get()
+            detail = self.detail.get()
+            cost = self.cost.get()
+            tam = self.tam.get()
+            stock = self.stock.get()
+            dic = {'name': name, 'description': detail, 'cost': cost, 'size': tam, 'stock': stock,
+                   'valid': self.i18n.edit}
+            self.actualizar_products()
+            self.topl.destroy()
+            self.name.set(' ')
+            self.detail.set(' ')
+            self.cost.set(' ')
+            self.tam.set(' ')
+            self.stock.set(' ')
+            self.new_p_toplevel('redraw', dic)
 
     def close_details(self):
         self.actualizar_products()
@@ -292,8 +329,12 @@ class Gui(tk.Frame):
         self.cost.set(produc['cost'])
         self.tam.set(produc['size'])
         self.stock.set(produc['stock'])
-        if produc['valid'] == 'edit':
-            pass
+        if produc['valid'] == self.i18n.edit:
+            self.name_edit = produc['name']
+            self.btn_save.configure(state='disabled')
+            self.btn_save.grid_forget()
+            self.btn_edit = ttk.Button(self.topl, text=self.i18n.edit, command=self.onEdit)
+            self.btn_edit.grid(column=2, row=7, sticky=tk.SE)
 
 
     def form_new_product(self):
