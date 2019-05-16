@@ -102,7 +102,6 @@ class Gui(tk.Frame):
             self.new_p_toplevel('redraw', dic)
 
     def onEdit(self):
-        print(type(self.stock.get()))
         self.model.update_product(self.name_edit, self.name.get(), self.detail.get(), int(self.cost.get()), self.tam.get(),
                                   int(self.stock.get()))
         self.actualizar_products()
