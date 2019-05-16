@@ -68,22 +68,33 @@ class Gui(tk.Frame):
             self.tab_control.configure( height=self.canvas.winfo_height()-24)
 
     def onSave(self, event):
-        flag = False
-        patternStock, stock = r"^\b(10{0,2}|[1-9]{1,2})\b$", self.stock.get()
-        patternCost, cost= r"^\b([1-9][0-9]{0,3}|10000)\b$", self.cost.get()
-        matchStock = re.search(patternStock, stock)
-        matchCost = re.search(patternCost, cost)
+        c, s = False, False
+        patternStock = re.compile(r"^\b(10{0,2}|[1-9]{1,2})\b$")
+        stock = self.stock.get()
+        patternCost = re.compile(r"^\b([1-9][0-9]{0,3}|10000)\b$")
+        cost = self.cost.get()
+        matchCost = patternCost.search(cost)
+        matchStock = patternStock.search(stock)
+        print(matchCost, '-', matchStock)
+        # if s != () & c != ():
+        #     flag = True
+        #     if matchCost == None:
+        #         msg2 = MessagePopup(self.i18n.msgCostTitle, self.i18n.msgCostBody, 'w')
+        #     else:
+        #         msg = MessagePopup(self.i18n.msgStockTitle, self.i18n.msgStockBody, 'w')
         if matchCost:
-            flag = True
+            c = True
         else:
             msg2 = MessagePopup(self.i18n.msgCostTitle, self.i18n.msgCostBody, 'w')
+            c= False
 
         if matchStock:
-            flag = True
+            s = True
         else:
             msg = MessagePopup(self.i18n.msgStockTitle, self.i18n.msgStockBody, 'w')
+            s = False
 
-        if flag:
+        if c & s:
             self.model.create_product(self.name.get(), self.detail.get(), int(self.cost.get()), self.tam.get(),
                                       int(self.stock.get()))
             # actualizar tab 3
@@ -99,6 +110,11 @@ class Gui(tk.Frame):
             dic = {'name': name, 'description': detail, 'cost': cost, 'size': tam, 'stock': stock, 'valid': 'new'}
             self.actualizar_products()
             self.topl.destroy()
+            self.name.set(' ')
+            self.detail.set(' ')
+            self.cost.set(' ')
+            self.tam.set(' ')
+            self.stock.set(' ')
             self.new_p_toplevel('redraw', dic)
 
     def onEdit(self):
@@ -350,8 +366,9 @@ class Gui(tk.Frame):
         # Form name
         ttk.Label(self.topl, text=self.i18n.name, font=("Cantarell", 15)).grid(column=0, row=1)
         self.name = tk.StringVar()
-        self.name_entry = ttk.Entry(self.topl, textvariable=self.name, font=("Cantarell", 10), width=30).grid(column=1,
-                                                                                                              row=1)
+        self.name_entry = ttk.Entry(self.topl, textvariable=self.name, font=("Cantarell", 10), width=30)
+        self.name_entry.grid(column=1,row=1)
+        self.name_entry.focus()
         # details
         ttk.Label(self.topl, text=self.i18n.details, font=("Cantarell", 15)).grid(column=0, row=2)
         self.detail = tk.StringVar()
