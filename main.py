@@ -76,12 +76,6 @@ class Gui(tk.Frame):
         matchCost = patternCost.search(cost)
         matchStock = patternStock.search(stock)
         print(matchCost, '-', matchStock)
-        # if s != () & c != ():
-        #     flag = True
-        #     if matchCost == None:
-        #         msg2 = MessagePopup(self.i18n.msgCostTitle, self.i18n.msgCostBody, 'w')
-        #     else:
-        #         msg = MessagePopup(self.i18n.msgStockTitle, self.i18n.msgStockBody, 'w')
         if matchCost:
             c = True
         else:
