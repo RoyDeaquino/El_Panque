@@ -408,9 +408,9 @@ class Gui(tk.Frame):
             self.form_edit(name)
         elif form == 'redraw':
             if name['valid'] == self.i18n.edit:
-                self.topl.title = self.i18n.edit
+                self.topl.title(self.i18n.edit)
             else:
-                self.topl.title = self.i18n.new_product
+                self.topl.title(self.i18n.new_product)
             self.redraw(name)
         # Se ejecuta el Toplevel como thread in daemon, padx=5, pady=5
         self.run_top = Thread(target=self.topl.mainloop())
